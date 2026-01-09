@@ -318,7 +318,7 @@
             <div class="info-item">
                 <h3>오시는 길</h3><br>
                 <h5>서울 강남구 봉은사로 637
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="position:relative; top:3px; left:-4px; width: 20px; height: auto; display:inline; fill:none; stroke:#666; stroke-width:1; background-color:white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="position:relative; top:3px; left:-4px; width: 20px; height: auto; display:inline; fill:none; stroke:#666; stroke-width:1; background-color:white" onclick="copyAddress(event)">
                         <rect class="st0" x="3.93" y="6.41" width="8.64" height="10.98" rx="2" ry="2"/>
                         <path class="st0" d="M12.57,13.59h1.5c1.1,0,2-.9,2-2v-6.98c0-1.1-.9-2-2-2h-4.64c-1.1,0-2,.9-2,2v1.8"/>
                     </svg>
@@ -454,6 +454,37 @@
                     document.getElementById('bg').style.backgroundImage = `url('${url}')`;
                 }
             }
+        }
+
+        function copyAddress(event) {
+            event.preventDefault();
+            const address = "서울 강남구 봉은사로 637";
+            
+            navigator.clipboard.writeText(address).then(() => {
+                // 복사 완료 알림
+                // const notification = document.createElement('div');
+                // notification.textContent = '주소가 복사되었습니다';
+                // notification.style.cssText = `
+                //     position: fixed;
+                //     top: 50%;
+                //     left: 50%;
+                //     transform: translate(-50%, -50%);
+                //     background-color: rgba(0, 0, 0, 0.8);
+                //     color: white;
+                //     padding: 15px 30px;
+                //     border-radius: 5px;
+                //     z-index: 1000;
+                //     font-family: 'Pretendard';
+                //     font-size: 14px;
+                // `;
+                // document.body.appendChild(notification);
+                
+                // setTimeout(() => {
+                //     notification.remove();
+                // }, 2000);
+            }).catch(err => {
+                alert('복사에 실패했습니다');
+            });
         }
     </script>
 </body>
