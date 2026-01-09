@@ -221,7 +221,7 @@
             text-underline-offset: 3px;
             font-size: 14px;
             font-weight: 400;
-            color: blue;
+            color: black;
 
             margin-left: 10px;
             padding: 7px 0;
@@ -233,7 +233,7 @@
             gap: 14px;
             overflow-x: auto;
             overflow-y: hidden;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
@@ -251,8 +251,16 @@
         
         .footer {
             padding: 30px;
-            height: 700px;
+            height: 600px;
             text-align: center;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .footer p{
+            line-height: 1.8;
+            white-space: normal;
         }
     </style>
 </head>
@@ -294,9 +302,9 @@
             <p><strong>양금순</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>김태욱의</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>아들</strong></p><p style="text-align: right;"><strong>성현</strong></p>
             <p><strong>김지연</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>김택군의</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>딸</strong></p><p style="text-align: right;"><strong>지우</strong></p>
         </div>
-        <div class="comments">
+        <!-- <div class="comments">
             <p>2017 - 2026<br>우리 이제 결혼해요</p>
-        </div>
+        </div> -->
         <div class="info-section">
             <div class="info-item">
                 <h3>날짜</h3><br>
@@ -353,16 +361,19 @@
             </div>
         </div>
         <div class="gallery">
-            <div style="margin-left: 10px;"></div>
+            <div style="margin-left: 12px;"></div>
             <img src="./pic02.jpg" alt="사진 1" onclick="changeBg('./pic02.jpg')">
             <img src="./pic03.jpg" alt="사진 2" onclick="changeBg('./pic03.jpg')">
             <img src="./pic04.jpg" alt="사진 3" onclick="changeBg('./pic04.jpg')">
             <img src="./pic05.jpg" alt="사진 4" onclick="changeBg('./pic05.jpg')">
             <img src="./pic06.jpg" alt="사진 5" onclick="changeBg('./pic06.jpg')">
             <img src="./pic01.jpg" alt="사진 6" onclick="changeBg('./pic01.jpg')">
-            <div style="margin-left: 10px;"></div>
-         </div>
+            <div style="margin-right: 12px;"></div>
+        </div>
         <div class="footer">
+            <div>            
+                <p>2017 - 2026<br>우리 이제 결혼해요</p>
+            </div>
         </div>
     </div>
     <script>
