@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light">
@@ -123,7 +124,7 @@
         h5 {
             padding: 7px 1px;
             line-height: 2.0;
-            font-size: 23px;
+            font-size: 22px;
             font-family: 'SunBatang-Light';
             font-weight: 300;
             display: inline;
@@ -176,8 +177,8 @@
 
         .parent p {
             font-size: 18px;
-            white-space: nowrap;
             background-color: transparent;
+            white-space: nowrap;
             display: inline;
         }
 
@@ -239,16 +240,23 @@
         .acc-grid {
             display: grid; 
             grid-template-columns: auto 1fr; 
-            gap: 10px 20px; 
+            gap: 14px; 
+            text-align: right;
             align-items: start;
             overflow: hidden;
-            transition: max-height 0.3s ease, opacity 0.3s ease;
+            transition: max-height 0.3s ease;
             max-height: 0;
         }
 
         .acc-grid.open {
             max-height: 500px;
-            opacity: 1;
+        }
+
+        .acc-grid p {
+            white-space: nowrap;
+            padding: 7px 1px;
+            background-color: white;
+            display: inline;
         }
 
         .gallery {
@@ -275,7 +283,7 @@
         .footer {
             padding: 30px;
             /* height: 700px; */
-            height: 92dvh;
+            height: 100dvh;
             text-align: center;
             display: flex;
             align-items: flex-end;
@@ -340,8 +348,8 @@
             </div>
             <div class="info-item" style="padding-bottom: 0px;">
                 <h3>오시는 길</h3><br>
-                <h5>서울 강남구 봉은사로 637
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="position:relative; top:3px; left:-4px; width: 20px; height: auto; display:inline; fill:none; stroke:#666; stroke-width:1;" onclick="copyAddress(event)">
+                <h5 onclick="copyAddress(event)">서울 강남구 봉은사로 637
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="position:relative; top:3px; left:-4px; width: 20px; height: auto; display:inline; fill:none; stroke:#666; stroke-width:1;">
                         <rect class="st0" x="3.93" y="6.41" width="8.64" height="10.98" rx="2" ry="2"/>
                         <path class="st0" d="M12.57,13.59h1.5c1.1,0,2-.9,2-2v-6.98c0-1.1-.9-2-2-2h-4.64c-1.1,0-2,.9-2,2v1.8"/>
                     </svg>
@@ -379,31 +387,63 @@
             </div>
             <div class="info-item" style="padding-top: 75px;">
                 <h3>축의금 전하기</h3><br><br><br>
-                <h4 onclick="toggleAccount('gr')" style="cursor: pointer;">
+                <h5 onclick="toggleAccount('gr')" style="cursor: pointer;">
                     <span id="gr-arrow">▷</span>신랑측
-                </h4><br>
+                </h5><br><br>
                 <div class="acc-grid" id="gr-acc">
-                    <p>
-                        <span>김성현</span>
-                        <u onclick="copyText(event, '신한 110-356-908742', 'account')">신한 110-356-908742 (복사)</u>
-                        <br><span>양금순</span>
-                        <u onclick="copyText(event, '국민 623401-01-982345', 'account')">국민 623401-01-982345 (복사)</u>
-                        <br><span>김태욱</span>
-                        <u onclick="copyText(event, '하나 356-910234-56789', 'account')">하나 356-910234-56789 (복사)</u>
-                    </p>
+                    <div>
+                        <p>김성현</p>
+                    </div>
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, '신한 110-356-908742', 'account')">신한 110-356-908742 (복사)</u>
+                        </p>
+                    </div>
+                    <div>
+                        <p>양금순</p>
+                    </div>
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, '국민 623401-01-982345', 'account')">국민 623401-01-982345 (복사)</u>
+                        </p>
+                    </div>
+                    <div>
+                        <p>김태욱</p>
+                    </div> 
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, '하나 356-910234-56789', 'account')">하나 356-910234-56789 (복사)</u>
+                        </p>
+                    </div>
                 </div><br>
-                <h4 onclick="toggleAccount('br')" style="cursor: pointer;">
+                <h5 onclick="toggleAccount('br')" style="cursor: pointer;">
                     <span id="br-arrow">▷</span>신부측
-                </h4><br>
+                </h5><br><br>
                 <div class="acc-grid" id="br-acc">
-                    <p>
-                        <span>김지우</span>
-                        <u onclick="copyText(event, '카카오 3333-09-8712456', 'account')">카카오 3333-09-8712456 (복사)</u>
-                        <br><span>김지연</span>
-                        <u onclick="copyText(event, '농협 301-4567-8901235', 'account')">농협 301-4567-890123 (복사)</u>
-                        <br><span>김택군</span>
-                        <u onclick="copyText(event, 'SC제일 404-19-876543', 'account')">SC제일 404-19-876543 (복사)</u>
-                    </p>
+                    <div>
+                        <p>김지우</p>
+                    </div>
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, '카카오 3333-09-8712456', 'account')">카카오 3333-09-8712456 (복사)</u>
+                        </p>
+                    </div>
+                    <div>
+                        <p>김지연</p>
+                    </div>
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, '농협 301-4567-8901235', 'account')">농협 301-4567-890123 (복사)</u>
+                        </p>
+                    </div>
+                    <div>
+                        <p>김택군</p>
+                    </div>
+                    <div>
+                        <p>
+                            <u onclick="copyText(event, 'SC제일 404-19-876543', 'account')">SC제일 404-19-876543 (복사)</u>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="info-item" style="padding-bottom: 6px;">
@@ -532,7 +572,7 @@
             
             navigator.clipboard.writeText(text).then(() => {
                 const notification = document.createElement('div');
-                notification.textContent = message[type] || '복사되었습니다';
+                notification.textContent = messages[type] || '복사되었습니다';
                 notification.style.cssText = `
                     position: fixed;
                     top: 50%;
