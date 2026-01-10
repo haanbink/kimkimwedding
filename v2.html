@@ -210,7 +210,11 @@
         }
 
         .info-item {
-            padding: 30px 0;
+            padding: 45px 0;
+        }
+
+        #sub {
+            padding: 15px 0 !important;
         }
         
         .applink {
@@ -230,6 +234,21 @@
             margin-left: 10px;
             padding: 7px 1px;
             background-color: white;
+        }
+
+        .acc-grid {
+            display: grid; 
+            grid-template-columns: auto 1fr; 
+            gap: 10px 20px; 
+            align-items: start;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            max-height: 0;
+        }
+
+        .acc-grid.open {
+            max-height: 500px;
+            opacity: 1;
         }
 
         .gallery {
@@ -319,7 +338,7 @@
                 <h3>장소</h3><br>
                 <h5>노블발렌티 삼성점</h5>
             </div>
-            <div class="info-item">
+            <div class="info-item" style="padding-bottom: 0px;">
                 <h3>오시는 길</h3><br>
                 <h5>서울 강남구 봉은사로 637
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="position:relative; top:3px; left:-4px; width: 20px; height: auto; display:inline; fill:none; stroke:#666; stroke-width:1; background-color:white" onclick="copyAddress(event)">
@@ -336,21 +355,21 @@
                     <a href="https://map.naver.com/p/entry/place/12390329" class="button" target="_blank">네이버지도↗</a>
                 </div>
             </div>
-            <div class="info-item">
+            <div class="info-item" id="sub">
                 <h4>주차안내</h4><br>
-                <p>본 식장이 혼잡할 경우 별관 주차장*을 이용 부탁드립니다. --- *<u onclick="copyText(event, '강남구 봉은사로 610')" style="cursor: pointer;">강남구 봉은사로 610</u> (셔틀 이용가능)</p>
+                <p>본 식장이 혼잡할 경우 별관 주차장*을 이용 부탁드립니다. --- *<u onclick="copyText(event, '서울특별시 강남구 봉은사로 610', 'address')" style="cursor: pointer;">강남구 봉은사로 610</u> (셔틀 이용가능)</p>
             </div>
-            <div class="info-item">
+            <div class="info-item" id="sub">
                 <h4>셔틀버스</h4><br>
                 <p>봉은사역 5번 출구 --- 우측 50~60m</p>
             </div>
-            <div class="info-item">
+            <div class="info-item" id="sub">
                 <h4>지하철</h4><br>
                 <p>9호선 봉은사역 4번 출구 --- 도보 약 4분
                     <br>2호선 삼성역 7번 출구 --- 도보 약 15분
                 </p>
             </div>
-            <div class="info-item">
+            <div class="info-item" id="sub">
                 <h4>버스</h4><br>
                 <p>--- 봉은사역 3번 출구. 삼성 1파출소
                     <br>간선 143, 146, 301, 343, 345, 401&nbsp;
@@ -358,22 +377,48 @@
                     <br>직행 9407, 9507, 9607&nbsp;
                 </p>
             </div>
-            <div class="info-item">
-                <h3>축의금 전하기</h3>
+            <div class="info-item" style="padding-top: 75px;">
+                <h3>축의금 전하기</h3><br><br><br>
+                <h4 onclick="toggleAccount('gr')" style="cursor: pointer;">
+                    <span id="gr-arrow">▷</span>신랑측
+                </h4><br>
+                <div class="acc-grid" id="gr-acc">
+                    <p>
+                        <span>김성현</span>
+                        <u onclick="copyText(event, '신한 110-356-908742', 'account')">신한 110-356-908742 (복사)</u>
+                        <br><span>양금순</span>
+                        <u onclick="copyText(event, '국민 623401-01-982345', 'account')">국민 623401-01-982345 (복사)</u>
+                        <br><span>김태욱</span>
+                        <u onclick="copyText(event, '하나 356-910234-56789', 'account')">하나 356-910234-56789 (복사)</u>
+                    </p>
+                </div><br>
+                <h4 onclick="toggleAccount('br')" style="cursor: pointer;">
+                    <span id="br-arrow">▷</span>신부측
+                </h4><br>
+                <div class="acc-grid" id="br-acc">
+                    <p>
+                        <span>김지우</span>
+                        <u onclick="copyText(event, '카카오 3333-09-8712456', 'account')">카카오 3333-09-8712456 (복사)</u>
+                        <br><span>김지연</span>
+                        <u onclick="copyText(event, '농협 301-4567-8901235', 'account')">농협 301-4567-890123 (복사)</u>
+                        <br><span>김택군</span>
+                        <u onclick="copyText(event, 'SC제일 404-19-876543', 'account')">SC제일 404-19-876543 (복사)</u>
+                    </p>
+                </div>
             </div>
-            <div class="info-item">
+            <div class="info-item" style="padding-bottom: 6px;">
                 <h3>갤러리</h3>
             </div>
         </div>
         <div class="gallery">
-            <div style="margin-left: 12px;"></div>
+            <div style="margin-left: 10px;"></div>
             <img src="./pic02.jpg" alt="사진 1" onclick="changeBg('./pic02.jpg')">
             <img src="./pic03.jpg" alt="사진 2" onclick="changeBg('./pic03.jpg')">
             <img src="./pic04.jpg" alt="사진 3" onclick="changeBg('./pic04.jpg')">
             <img src="./pic05.jpg" alt="사진 4" onclick="changeBg('./pic05.jpg')">
             <img src="./pic06.jpg" alt="사진 5" onclick="changeBg('./pic06.jpg')">
             <img src="./pic01.jpg" alt="사진 6" onclick="changeBg('./pic01.jpg')">
-            <div style="margin-right: 12px;"></div>
+            <div style="margin-right: 10px;"></div>
         </div>
         <div class="footer">
             <div>            
@@ -477,25 +522,30 @@
             }
         }
 
-        function copyAddress(event, text) {
+        function copyText(event, text, message) {
             event.preventDefault();
+
+            const messages = {
+                'address': '주소가 복사되었습니다',
+                'account': '계좌번호가 복사되었습니다'
+            };
             
             navigator.clipboard.writeText(text).then(() => {
-                // 복사 완료 알림
                 const notification = document.createElement('div');
-                notification.textContent = '주소가 복사되었습니다';
+                notification.textContent = message[type] || '복사되었습니다';
                 notification.style.cssText = `
                     position: fixed;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    background-color: rgba(50, 50, 50, 0.5);
+                    background-color: rgba(50, 50, 50, 0.7);
                     color: white;
                     padding: 11px 4px;
                     z-index: 1000;
                     font-family: 'Pretendard';
                     font-size: 18px;
                     font-weight: 100;
+                    white-space: nowrap;
                     opacity: 0;
                 `;
                 document.body.appendChild(notification);
@@ -521,8 +571,21 @@
         }
 
         function copyAddress(event) {
-            const address = "서울특별시 강남구 봉은사로 637";
+            copyText(event, "서울특별시 강남구 봉은사로 637", "address");
         }
+
+        function toggleAccount(type) {
+    const content = document.getElementById(type + '-acc');
+    const arrow = document.getElementById(type + '-arrow');
+    
+    if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        arrow.textContent = '▷';
+    } else {
+        content.classList.add('open');
+        arrow.textContent = '▽';
+    }
+}
     </script>
 </body>
 </html>
