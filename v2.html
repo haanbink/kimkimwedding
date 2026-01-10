@@ -94,7 +94,7 @@
         }
 
         p {
-            padding: 7px 0;
+            padding: 7px 1px;
             font-size: 18px;
             white-space: nowrap;
             background-color: white;
@@ -102,7 +102,7 @@
         }
 
         h3 {
-            padding: 7px 0;
+            padding: 7px 1px;
             font-size: 18px;
             font-family: 'SunBatang-Medium';
             background-color: white;
@@ -111,7 +111,7 @@
         }
 
         h4 {
-            padding: 7px 0;
+            padding: 7px 1px;
             font-size: 18px;
             font-family: 'SunBatang-Light';
             font-weight: 300;
@@ -121,13 +121,17 @@
         }
 
         h5 {
-            padding: 7px 0;
+            padding: 7px 1px;
             line-height: 2.0;
             font-size: 23px;
             font-family: 'SunBatang-Light';
             font-weight: 300;
             display: inline;
             background-color: white;
+        }
+
+        u {
+            text-underline-offset: 3px;
         }
 
         .info-item p {
@@ -152,7 +156,7 @@
         }
 
         #title {
-            padding: 7px 0;
+            padding: 7px 1px;
             color: black;   
             width: 50%;
             margin-bottom: 500px;
@@ -178,7 +182,7 @@
         }
 
         .parent p strong {
-            padding: 7px 0;
+            padding: 7px 1px;
             font-weight: normal;
             background-color: white;
         }
@@ -218,13 +222,13 @@
             font-family: 'Pretendard';
             display: inline-block;
             text-decoration: none;
-            text-underline-offset: 3px;
+            /* text-underline-offset: 3px; */
             font-size: 14px;
             font-weight: 400;
             color: black;
 
             margin-left: 10px;
-            padding: 7px 0;
+            padding: 7px 1px;
             background-color: white;
         }
 
@@ -334,21 +338,21 @@
             </div>
             <div class="info-item">
                 <h4>주차안내</h4><br>
-                <p>본 식장이 혼잡할 경우 별관 주차장*을 이용 부탁드립니다.______*강남구 봉은사로 610(셔틀 이용가능)</p>
+                <p>본 식장이 혼잡할 경우 별관 주차장*을 이용 부탁드립니다. --- *<u onclick="copyText(event, '강남구 봉은사로 610')" style="cursor: pointer;">강남구 봉은사로 610</u> (셔틀 이용가능)</p>
             </div>
             <div class="info-item">
                 <h4>셔틀버스</h4><br>
-                <p>봉은사역 5번 출구 ″우측 50~60m</p>
+                <p>봉은사역 5번 출구 --- 우측 50~60m</p>
             </div>
             <div class="info-item">
                 <h4>지하철</h4><br>
-                <p>9호선 봉은사역 4번 출구 ″도보 약 4분
-                    <br>2호선 삼성역 7번 출구 ″도보 약 15분
+                <p>9호선 봉은사역 4번 출구 --- 도보 약 4분
+                    <br>2호선 삼성역 7번 출구 --- 도보 약 15분
                 </p>
             </div>
             <div class="info-item">
                 <h4>버스</h4><br>
-                <p>9호선 봉은사역 3번 출구 ″삼성 1파출소
+                <p>--- 봉은사역 3번 출구. 삼성 1파출소
                     <br>간선 143, 146, 301, 343, 345, 401&nbsp;
                     <br>지선 2413, 2415, 3217, 3414, 4318&nbsp;
                     <br>직행 9407, 9507, 9607&nbsp;
@@ -473,11 +477,10 @@
             }
         }
 
-        function copyAddress(event) {
+        function copyAddress(event, text) {
             event.preventDefault();
-            const address = "서울특별시 강남구 봉은사로 637";
             
-            navigator.clipboard.writeText(address).then(() => {
+            navigator.clipboard.writeText(text).then(() => {
                 // 복사 완료 알림
                 const notification = document.createElement('div');
                 notification.textContent = '주소가 복사되었습니다';
@@ -515,6 +518,10 @@
             }).catch(err => {
                 alert('복사에 실패했습니다');
             });
+        }
+
+        function copyAddress(event) {
+            const address = "서울특별시 강남구 봉은사로 637";
         }
     </script>
 </body>
