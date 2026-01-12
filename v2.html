@@ -75,7 +75,6 @@
             background: #FFFEFA;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            touch-action: pan-y pinch-zoom;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -312,7 +311,6 @@
             -ms-overflow-style: none;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pinch-zoom;
         }
 
         .gallery::-webkit-scrollbar {
@@ -324,10 +322,13 @@
             height: 100px;
             object-fit: cover;
             cursor: pointer;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+            display: block;
+            transform: scale(1.01); 
+    
+            outline: 1px solid transparent; 
+            
+            position: relative;
+            z-index: 1;
         }
         
         .footer {
