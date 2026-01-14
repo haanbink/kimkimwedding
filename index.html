@@ -13,35 +13,17 @@
     <meta property="og:title" content="2026년 3월 14일 오후 3시">
     <meta property="og:description" content="노블발렌티 삼성점">
     <meta property="og:url" content="">
-    <meta property="og:image" content="./ogthumbA.jpg" />
+    <meta property="og:image" content="./ogthumb.jpg" />
     <meta property="og:type" content="website">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="192x192" href="./android-chrome-192x192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=qdqp0fvbx4" defer></script>
     <style>
-
-        @font-face {
-            font-family: 'SunBatang-Light';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Light.woff') format('woff');
-            font-weight: 300;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'SunBatang-Medium';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Medium.woff') format('woff');
-            font-weight: 500;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'SunBatang-Bold';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Bold.woff') format('woff');
-            font-weight: 700;
-            font-display: swap;
-        }
-        @import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
-
         @font-face {
             font-family: 'Pretendard';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
@@ -70,11 +52,10 @@
             font-display: swap;
         }
 
-        @font-face {
-            font-family: 'Pretendard';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
-            font-weight: 700;
-            font-display: swap;
+        body.initial-mode,
+        body.initial-mode * {
+            font-family: 'Pretendard', sans-serif !important;
+            font-weight: 300 !important;
         }
 
         * {
@@ -87,6 +68,9 @@
             font-family: 'Pretendard', sans-serif;
             background: #FFFEFA;
             color: black;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
         }
 
         p {
@@ -138,7 +122,7 @@
             align-items: flex-end;
             justify-content: center;
             position: relative;
-            background: url("./pic01.jpg") center/cover no-repeat;
+            background: url("./pic01_thumb.jpg") center/cover no-repeat;
         }
 
         .header::after {
@@ -188,11 +172,12 @@
             width: 100%;
             height: 250px;
             background: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
             margin-top: 10px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
         }
 
         .info-item {
@@ -227,6 +212,41 @@
             overflow: hidden;
             transition: max-height 0.3s ease;
             max-height: 500px;
+        }
+
+        .acc-grid.closed {
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        h4.toggle-btn {
+            display: inline;
+            cursor: pointer;
+            text-align: center;
+            border: 0.8px solid black;
+            padding: 10px 40px;
+            border-radius: 3px;
+        }
+
+        h4.toggle-btn.active::before {
+            content: '▽ ';
+        }
+
+        h4.toggle-btn.active::after {
+            content: ' ▽';
+        }
+
+        h4.toggle-btn:not(.active) {
+            border: 0.8px solid black;
+        }
+
+        h4.toggle-btn:not(.active)::before {
+            content: '▷ ';
+            text-decoration: none;
+        }
+
+        h4.toggle-btn:not(.active)::after {
+            content: ' ◁';
         }
 
         .gallery {
@@ -271,15 +291,33 @@
             position: relative;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+        }
+
+        .lightbox-slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        .lightbox-slide {
+            min-width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .lightbox-img {
+        .lightbox-slide img {
             max-width: 100%;
-            max-height: 80%;
+            max-height: 100%;
             object-fit: contain;
+        }
+
+        .lightbox-content.dragging .lightbox-slides {
+            transition: none;
         }
 
         .lightbox-close {
@@ -304,15 +342,21 @@
             position: absolute;
             bottom: 30px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(5%);
             color: black;
             font-size: 16px;
             font-weight: 400;
+            z-index: 10001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox-nav {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             background: transparent;
             border: none;
             color: black;
@@ -324,6 +368,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10001;
         }
 
         .lightbox-prev {
@@ -339,13 +384,29 @@
             text-align: center;
             font-size: 13px;
         }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
+    <div class="loading" id="loading" aria-live="polite">
+        <p>loading...</p>
+    </div>
     <div class="container">
         <div class="header">
-            <?xml version="1.0" encoding="UTF-8"?>
-            <svg id="title" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 102.05 34.02">
+            <svg id="title" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102.05 34.02">
                 <g>
                     <g>
                     <path d="M69.57,7.67c-.08.14-.72,1.27-2.05,2.48-1.26,1.13-2.41,1.87-2.7,1.98-.15.06-.18-.01-.07-.1.2-.15,1.63-1.21,2.59-2.28,1.3-1.43,1.59-2.21,1.65-2.33-.15,0-.37-.01-.97.01-.9.03-1.14.07-1.22.08-.21.01-.46.18-.66.09-.22-.1-.5-.18-.68-.31-.29-.21-.21-.25.16-.2.72.1,3.17.03,3.25.02.08-.01.3-.12.39-.13.07-.01.69.28.66.45-.02.13-.31.17-.36.23ZM72.34,12.41c-.06.26-.13.63-.28,1.2-.09.37-.15.67-.22.9.14-.01.13-.01.35,0,.35.01.38.44-.13.42-1.83-.08-2.94-.02-3.13-.02-.01.08-.02.4-.24.44-.16.02-.21-.43-.22-.65l-.16-2.4c-.01-.17-.44-.31-.6-.33-.22-.02-.23-.14.05-.22.16-.05.4.01.66.03.28.02.44.12.46.17.03.09,2.23.02,2.59,0,.09,0,.37-.18.43-.18.07,0,.66.21.66.35s-.2.18-.22.3ZM68.9,12.26l.03,2.35c.15,0,1.11.03,1.75,0,.43-.02.67-.05.95-.08l.1-2.32-2.84.05ZM72.37,9.06c-.01,1.44-.16,2.24-.39,2.25-.14.01-.17-.43-.17-1.08v-4.28c-.01-.27-.85-.62-.98-.63-.22-.02-.36-.17.13-.24.16-.02.53.1.81.18.97.28.66.29.65.81l-.03,3Z"/>
@@ -383,22 +444,25 @@
             <p>2017 - 2026<br>우리 이제 결혼해요</p>
         </div>
         <div class="gallery">
-            <img src="./pic01.jpg" alt="사진 1" onclick="openLightbox(0)">
-            <img src="./pic02.jpg" alt="사진 2" onclick="openLightbox(1)">
-            <img src="./pic03.jpg" alt="사진 3" onclick="openLightbox(2)">
-            <img src="./pic04.jpg" alt="사진 4" onclick="openLightbox(3)">
-            <img src="./pic05.jpg" alt="사진 5" onclick="openLightbox(4)">
-            <img src="./pic06.jpg" alt="사진 6" onclick="openLightbox(5)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic01.jpg" alt="사진 1" onclick="openLightbox(0)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic02.jpg" alt="사진 2" onclick="openLightbox(1)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic03.jpg" alt="사진 3" onclick="openLightbox(2)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic04.jpg" alt="사진 4" onclick="openLightbox(3)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic05.jpg" alt="사진 5" onclick="openLightbox(4)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic06.jpg" alt="사진 6" onclick="openLightbox(5)">
         </div>
 
         <div class="lightbox" id="lightbox">
             <div class="lightbox-content" id="lightbox-content">
-                <button class="lightbox-close" onclick="closeLightbox()">×</button>
-                <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">‹</button>
-                <img class="lightbox-img" id="lightbox-img" src="">
-                <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">›</button>
-                <div class="lightbox-counter" id="lightbox-counter">1/6</div>
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">‹</button>
+            
+            <div class="lightbox-slides" id="lightbox-slides">
             </div>
+            
+            <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">›</button>
+            <div class="lightbox-counter" id="lightbox-counter">1/6</div>
+        </div>
         </div>
         <div class="info-section">
             <div class="info-item">
@@ -418,7 +482,7 @@
                     </svg>
                 </h5>
                 <div class="map-placeholder">
-                    지도 영역
+                    <div id="map"></div>
                 </div>
                 <div class="applink">
                     <a href="https://tmap.life/fca727ea" class="button" target="_blank">티맵↗</a>
@@ -443,17 +507,17 @@
             <div class="info-item">
                 <h4>버스</h4>
                 <p>9호선 <u>봉은사역 3번 출구. 삼성 1파출소</u>
-                    <br><span style="color:rgb(0, 0, 131);">간선</span> 143, 146, 301, 343, 345, 401
+                    <br><span style="color:rgb(0, 0, 184);">간선</span> 143, 146, 301, 343, 345, 401
                     <br><span style="color:rgb(0, 157, 0);">지선</span> 2413, 2415, 3217, 3414, 4318
                     <br><span style="color:rgb(207, 0, 0);">직행</span> 9407, 9507, 9607
                 </p>
             </div>
             <div class="info-item" style="padding-top: 75px;">
                 <h3>축의금 전하기</h3><br><br>
-                <div>
-                    <h4 onclick="toggleAccount('gr')" style="cursor: pointer; text-align: center;" class="active">~ 신랑측 ~</h4>
+                <div style="text-align: center;">
+                    <h4 class="toggle-btn" onclick="toggleAccount('gr')" style="cursor: pointer; text-align: center;">신랑측</h4>
                 </div><br>
-                <div class="acc-grid" id="gr-acc">
+                <div class="acc-grid  closed" id="gr-acc">
                     <div>
                         <p>김성현</p>
                     </div>
@@ -479,10 +543,10 @@
                         </p>
                     </div>
                 </div><br><br><br>
-                <div>
-                    <h4 onclick="toggleAccount('br')" style="cursor: pointer; text-align: center;" class="active">~ 신부측 ~</h4>
+                <div style="text-align: center;">
+                    <h4 class="toggle-btn" onclick="toggleAccount('br')" style="cursor: pointer; text-align: center;">신부측</h4>
                 </div><br>
-                <div class="acc-grid" id="br-acc">
+                <div class="acc-grid  closed" id="br-acc">
                     <div>
                         <p>김지우</p>
                     </div>
@@ -506,15 +570,12 @@
         </div>
     </div>
     <script>
+        // 1. 데이터 정의
         const images = [
-            './pic01.jpg',
-            './pic02.jpg',
-            './pic03.jpg',
-            './pic04.jpg',
-            './pic05.jpg',
-            './pic06.jpg'
+            './pic01.jpg', './pic02.jpg', './pic03.jpg', 
+            './pic04.jpg', './pic05.jpg', './pic06.jpg'
         ];
-
+        
         const proxyImages = {
             './pic01.jpg': './pic01_thumb.jpg',
             './pic02.jpg': './pic02_thumb.jpg',
@@ -524,224 +585,264 @@
             './pic06.jpg': './pic06_thumb.jpg'
         };
 
-        let loadedImages = {};
-        let currentImageIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
+        const fontConfig = [
+            { weight: '300', url: 'https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2' },
+            { weight: '400', url: 'https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2' },
+            { weight: '500', url: 'https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2' },
+            { weight: '600', url: 'https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2' },
+            { weight: '700', url: 'https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2' }
+        ];
 
-        // 1단계: pic01 프록시와 원본 먼저 로드
-        function loadPic01() {
-            return new Promise((resolve) => {
-                // 프록시 먼저
-                const proxyImg = new Image();
-                proxyImg.onload = () => {
-                    // 헤더 배경에 프록시 적용
-                    document.querySelector('.header').style.backgroundImage = `url('${proxyImages['./pic01.jpg']}')`;
-                    
-                    // 원본 로드
-                    const originalImg = new Image();
-                    originalImg.onload = () => {
-                        loadedImages['./pic01.jpg'] = true;
-                        // 원본 로드되면 배경 교체
-                        document.querySelector('.header').style.backgroundImage = `url('./pic01.jpg')`;
-                        resolve();
-                    };
-                    originalImg.onerror = () => resolve();
-                    originalImg.src = './pic01.jpg';
-                };
-                proxyImg.onerror = () => {
-                    // 프록시 실패 시 바로 원본 로드
-                    const originalImg = new Image();
-                    originalImg.onload = () => {
-                        loadedImages['./pic01.jpg'] = true;
-                        document.querySelector('.header').style.backgroundImage = `url('./pic01.jpg')`;
-                        resolve();
-                    };
-                    originalImg.onerror = () => resolve();
-                    originalImg.src = './pic01.jpg';
-                };
-                proxyImg.src = proxyImages['./pic01.jpg'];
+        let loadedImages = {}; // 원본 로딩 여부 체크용
+
+        // 2. 유틸리티 함수 정의
+        
+        // 폰트 로딩 함수
+        async function loadFont(weight) {
+            const config = fontConfig.find(f => f.weight === weight);
+            if (!config) return;
+            try {
+                const font = new FontFace('Pretendard', `url(${config.url})`, { weight: weight });
+                await font.load();
+                document.fonts.add(font);
+            } catch(e) { console.log('Font load error', e); }
+        }
+
+        // 이미지 로딩 함수 (Promise)
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(src);
+                img.onerror = () => reject(src);
+                img.src = src;
             });
         }
 
-        // 2단계: 폰트 로드
-        function loadFonts() {
-            const fontsToLoad = [
-                new FontFace('SunBatang-Light', 'url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Light.woff)'),
-                new FontFace('SunBatang-Medium', 'url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/SunBatang-Medium.woff)'),
-                new FontFace('Pretendard', 'url(https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2)', { weight: '300' }),
-                new FontFace('Pretendard', 'url(https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2)', { weight: '400' })
-            ];
-            
-            return Promise.all(fontsToLoad.map(font => 
-                font.load()
-                    .then(f => document.fonts.add(f))
-                    .catch(() => {})
-            ));
-        }
-
-        // 3단계: 나머지 이미지 순차 로드
-        function loadRemainingImages() {
-            const remainingImages = images.slice(1); // pic01 제외
-            let index = 0;
-            
-            function loadNext() {
-                if (index >= remainingImages.length) return;
-                
-                const src = remainingImages[index];
-                const proxySrc = proxyImages[src];
-                
-                // 프록시 먼저
-                const proxyImg = new Image();
-                proxyImg.onload = () => {
-                    // 원본 로드
-                    const originalImg = new Image();
-                    originalImg.onload = () => {
-                        loadedImages[src] = true;
-                        index++;
-                        loadNext();
-                    };
-                    originalImg.onerror = () => {
-                        index++;
-                        loadNext();
-                    };
-                    originalImg.src = src;
-                };
-                proxyImg.onerror = () => {
-                    // 프록시 실패 시 바로 원본
-                    const originalImg = new Image();
-                    originalImg.onload = () => {
-                        loadedImages[src] = true;
-                        index++;
-                        loadNext();
-                    };
-                    originalImg.onerror = () => {
-                        index++;
-                        loadNext();
-                    };
-                    originalImg.src = src;
-                };
-                proxyImg.src = proxySrc;
+        // 로딩 화면 제거 함수
+        function removeLoadingScreen() {
+            const loader = document.getElementById('loading');
+            if (loader) {
+                loader.style.opacity = '0'; // 페이드 아웃 효과 (CSS transition 필요)
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500); // 0.5초 뒤 완전히 제거
             }
-            
-            loadNext();
         }
 
-        // 순차 로딩 시작
-        window.addEventListener('load', async () => {
-            console.log('1. pic01 로딩 시작...');
-            await loadPic01();
-            
-            console.log('2. 폰트 로딩 시작...');
-            await loadFonts();
-            
-            console.log('3. 나머지 이미지 로딩 시작...');
-            loadRemainingImages();
-        });
+        // 3. 메인 실행 로직 (우선순위 제어)
+        async function initPage() {
+            // [초기 설정] 폰트 300 강제 적용 클래스 추가
+            document.body.classList.add('initial-mode');
 
-        // 라이트박스 함수들
+            // ----------------------------------------------------
+            // 1단계: 헤더 썸네일(프록시) & 폰트 300 동시 로딩
+            // ----------------------------------------------------
+            const p1_Header = loadImage(proxyImages['./pic01.jpg']).then(() => {
+                document.querySelector('.header').style.backgroundImage = `url('${proxyImages['./pic01.jpg']}')`;
+            });
+            const p1_Font = loadFont('300');
+            
+            await Promise.all([p1_Header, p1_Font]);
+
+            // ----------------------------------------------------
+            // 2단계: 갤러리 썸네일(프록시) 로딩 및 표시
+            // ----------------------------------------------------
+            const galleryImgs = document.querySelectorAll('.gallery img');
+            const thumbPromises = [];
+
+            galleryImgs.forEach((img) => {
+                const originalSrc = img.getAttribute('data-orig'); // HTML에서 data-orig 읽기
+                if (originalSrc && proxyImages[originalSrc]) {
+                    const thumbSrc = proxyImages[originalSrc];
+                    const p = loadImage(thumbSrc).then(() => {
+                        img.src = thumbSrc; // 투명 이미지를 썸네일로 교체
+                    });
+                    thumbPromises.push(p);
+                }
+            });
+
+            await Promise.all(thumbPromises);
+
+            // ----------------------------------------------------
+            // 3단계: ✨ 로딩 화면 제거 ✨ (사용자에게 화면 보여줌)
+            // ----------------------------------------------------
+            console.log("Visuals Ready -> Remove Loading");
+            removeLoadingScreen();
+
+            // ----------------------------------------------------
+            // 4단계: 나머지 폰트 순차 로딩 (무거운 리소스 시작)
+            // ----------------------------------------------------
+            await loadFont('600');
+            await loadFont('500');
+            await loadFont('400');
+            
+            // 모든 폰트 로딩 완료 -> 강제 300 모드 해제
+            document.body.classList.remove('initial-mode');
+
+            // ----------------------------------------------------
+            // 5단계: 원본 이미지 백그라운드 로딩 (고화질 교체)
+            // ----------------------------------------------------
+            
+            // 5-1. 헤더 원본 교체
+            loadImage('./pic01.jpg').then(() => {
+                document.querySelector('.header').style.backgroundImage = `url('./pic01.jpg')`;
+                loadedImages['./pic01.jpg'] = true;
+            });
+
+            // 5-2. 갤러리 원본 캐싱 (화면 교체 없이 메모리에만 로드해둠 -> 라이트박스 클릭 시 빠름)
+            images.forEach(src => {
+                if (src === './pic01.jpg') return; // 헤더는 이미 위에서 함
+                const img = new Image();
+                img.src = src;
+                img.onload = () => { loadedImages[src] = true; };
+            });
+        }
+
+        // 페이지 로드 시작
+        initPage();
+
+
+        // ============================================================
+        // 이하 기능 함수들 (라이트박스, 지도, 복사 등 - 기존 유지)
+        // ============================================================
+
+        let currentImageIndex = 0;
+        let currentIndex = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let isDragging = false;
+        let startPos = 0;
+
         function openLightbox(index) {
+            currentIndex = index;
             currentImageIndex = index;
-            updateLightboxImage();
+            
+            const slidesContainer = document.getElementById('lightbox-slides');
+            slidesContainer.innerHTML = '';
+            
+            images.forEach((src) => {
+                const slide = document.createElement('div');
+                slide.className = 'lightbox-slide';
+                const img = document.createElement('img');
+                
+                // 캐싱된 원본이 있으면 원본 사용, 없으면 프록시 사용
+                img.src = loadedImages[src] ? src : proxyImages[src];
+                
+                slide.appendChild(img);
+                slidesContainer.appendChild(slide);
+            });
+            
+            setPositionByIndex();
             document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox-counter').textContent = `${currentIndex + 1}/${images.length}`;
             document.body.style.overflow = 'hidden';
+
+            const lightboxContent = document.getElementById('lightbox-content');
+            lightboxContent.ontouchstart = touchStart;
+            lightboxContent.ontouchmove = touchMove;
+            lightboxContent.ontouchend = touchEnd;
         }
 
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = '';
+            isDragging = false;
+            currentTranslate = 0;
+            prevTranslate = 0;
         }
 
         function changeImage(direction) {
-            currentImageIndex += direction;
-            if (currentImageIndex < 0) currentImageIndex = images.length - 1;
-            if (currentImageIndex >= images.length) currentImageIndex = 0;
-            updateLightboxImage();
-        }
-
-        function updateLightboxImage() {
-            const imgSrc = loadedImages[images[currentImageIndex]] 
-                ? images[currentImageIndex] 
-                : proxyImages[images[currentImageIndex]];
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
             
-            document.getElementById('lightbox-img').src = imgSrc;
-            document.getElementById('lightbox-counter').textContent = `${currentImageIndex + 1}/${images.length}`;
+            setPositionByIndex();
+            updateCounter();
         }
 
-        // 터치 스와이프
-        const lightboxContent = document.getElementById('lightbox-content');
-
-        lightboxContent.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        lightboxContent.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchStartX - touchEndX > 50) {
-                changeImage(1);
-            }
-            if (touchEndX - touchStartX > 50) {
-                changeImage(-1);
-            }
+        function setPositionByIndex() {
+            const slidesContainer = document.getElementById('lightbox-slides');
+            currentTranslate = currentIndex * -window.innerWidth;
+            prevTranslate = currentTranslate;
+            slidesContainer.style.transform = `translateX(${currentTranslate}px)`;
         }
 
-        // 키보드 컨트롤
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') changeImage(-1);
-            if (e.key === 'ArrowRight') changeImage(1);
-        });
+        function updateCounter() {
+            document.getElementById('lightbox-counter').textContent = `${currentIndex + 1}/${images.length}`;
+        }
 
+        function touchStart(e) {
+            isDragging = true;
+            startPos = e.touches[0].clientX;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            document.getElementById('lightbox-slides').parentElement.classList.add('dragging');
+        }
+
+        function touchMove(e) {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            
+            if (Math.abs(currentX - touchStartX) < Math.abs(currentY - touchStartY)) return;
+            e.preventDefault();
+
+            currentTranslate = prevTranslate + (currentX - startPos);
+            document.getElementById('lightbox-slides').style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function touchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            const movedBy = currentTranslate - prevTranslate;
+
+            if (movedBy < -50 && currentIndex < images.length - 1) currentIndex += 1;
+            else if (movedBy > 50 && currentIndex > 0) currentIndex -= 1;
+
+            setPositionByIndex();
+            updateCounter();
+            document.getElementById('lightbox-slides').parentElement.classList.remove('dragging');
+        }
+
+        // 복사 관련 함수
         function copyText(event, text, type) {
             event.preventDefault();
+            const msg = type === 'address' ? '주소가 복사되었습니다' : '계좌번호가 복사되었습니다';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showNotification(msg)).catch(() => fallbackCopy(text, msg));
+            } else {
+                fallbackCopy(text, msg);
+            }
+        }
 
-            const messages = {
-                'address': '주소가 복사되었습니다',
-                'account': '계좌번호가 복사되었습니다'
-            };
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const notification = document.createElement('div');
-                notification.textContent = messages[type] || '복사되었습니다';
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background-color: rgba(50, 50, 50, 0.7);
-                    color: white;
-                    padding: 11px 4px;
-                    z-index: 1000;
-                    font-family: 'Pretendard';
-                    font-size: 18px;
-                    font-weight: 100;
-                    white-space: nowrap;
-                    opacity: 0;
-                `;
-                document.body.appendChild(notification);
-                
-                // 페이드인 (0.2초)
-                notification.style.transition = 'opacity 0.1s ease';
-                setTimeout(() => {
-                    notification.style.opacity = '1';
-                }, 10);
-                
-                // 페이드아웃 (1초)
-                setTimeout(() => {
-                    notification.style.transition = 'opacity 0.5s ease';
-                    notification.style.opacity = '0';
-                }, 1500);
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 2000);
-            }).catch(err => {
-                alert('복사에 실패했습니다');
-            });
+        function fallbackCopy(text, message) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showNotification(message);
+            } catch (err) { alert('복사 실패'); }
+            document.body.removeChild(ta);
+        }
+
+        function showNotification(message) {
+            const noti = document.createElement('div');
+            noti.textContent = message;
+            noti.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: rgba(50,50,50,0.7); color: white; padding: 11px 14px;
+                z-index: 10000; font-family: 'Pretendard'; font-size: 16px; border-radius: 4px;
+                transition: opacity 0.5s; opacity: 1; pointer-events: none;
+            `;
+            document.body.appendChild(noti);
+            setTimeout(() => { noti.style.opacity = '0'; }, 1500);
+            setTimeout(() => { noti.remove(); }, 2000);
         }
 
         function copyAddress(event) {
@@ -750,16 +851,57 @@
 
         function toggleAccount(type) {
             const content = document.getElementById(type + '-acc');
-            const button = event.target.closest('h4');
-            
-            if (content.classList.contains('closed')) {
-                content.classList.remove('closed');
-                button.classList.add('active');
-            } else {
-                content.classList.add('closed');
-                button.classList.remove('active');
-            }
+            const btn = event.target.closest('h4');
+            content.classList.toggle('closed');
+            btn.classList.toggle('active');
         }
+
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') changeImage(-1);
+            if (e.key === 'ArrowRight') changeImage(1);
+        });
+    </script>
+    <script>
+        // 네이버 지도 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            function initMap() {
+                if (typeof naver === 'undefined' || !naver.maps) {
+                    setTimeout(initMap, 100);
+                    return;
+                }
+                
+                var mapOptions = {
+                    center: new naver.maps.LatLng(37.515480, 127.064838),
+                    zoom: 17,
+                    zoomControl: false
+                };
+
+                var map = new naver.maps.Map('map', mapOptions);
+
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(37.515480, 127.064838),
+                    map: map,
+                    title: '노블발렌티 삼성점'
+                });
+
+                var infoWindow = new naver.maps.InfoWindow({
+                    content: '<div style="padding:10px;font-size:12px;">노블발렌티 삼성점</div>'
+                });
+
+                naver.maps.Event.addListener(marker, "click", function(e) {
+                    if (infoWindow.getMap()) {
+                        infoWindow.close();
+                    } else {
+                        infoWindow.open(map, marker);
+                    }
+                });
+            }
+            
+            initMap();
+        });
     </script>
 </body>
 </html>
