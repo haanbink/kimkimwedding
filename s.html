@@ -272,7 +272,7 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(2, 1fr);    
             gap: 10px;
             margin-bottom: 80px;
@@ -498,7 +498,8 @@
             <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic03.jpg" alt="사진 3" onclick="openLightbox(2)">
             <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic04.jpg" alt="사진 4" onclick="openLightbox(3)">
             <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic05.jpg" alt="사진 5" onclick="openLightbox(4)">
-            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic06.jpg" alt="사진 6" onclick="openLightbox(5)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic07.jpg" alt="사진 6" onclick="openLightbox(5)">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-orig="./pic06.jpg" alt="사진 7" onclick="openLightbox(6)">
         </div>
 
         <div class="lightbox" id="lightbox">
@@ -631,7 +632,7 @@
         // 1. 데이터 정의
         const images = [
             './pic01.jpg', './pic02.jpg', './pic03.jpg', 
-            './pic04.jpg', './pic05.jpg', './pic06.jpg'
+            './pic04.jpg', './pic05.jpg', './pic07.jpg', './pic06.jpg'
         ];
         
         const proxyImages = {
@@ -640,6 +641,7 @@
             './pic03.jpg': './pic03_thumb.jpg',
             './pic04.jpg': './pic04_thumb.jpg',
             './pic05.jpg': './pic05_thumb.jpg',
+            './pic07.jpg': './pic07_thumb.jpg',
             './pic06.jpg': './pic06_thumb.jpg'
         };
 
